@@ -1,0 +1,19 @@
+<div class="customer-detail" *ngIf="customer">
+    <h2>{{customer.name}}</h2>
+    <h3>{{customer.title}}</h3>
+    <a href="mailto:{{customer.email}}">
+        {{customer.email }}
+    </a>
+    
+    <a *ngIf="customer.handles?.twitter"
+       href="https://www.twitter.com/{{customer.handles?.twitter}}">
+        {{customer.handles?.twitter}}
+    </a>
+    <a *ngIf="customer.handles?.facebook"
+       href="https://www.facebook.com/{{customer.handles?.facebook}}">
+        {{customer.handles?.facebook}}
+    </a>
+
+    <br><br>
+    <button (click)="closed.emit()">Close</button>
+</div>

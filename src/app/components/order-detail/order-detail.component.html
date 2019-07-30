@@ -1,0 +1,26 @@
+<div class="order-detail">
+    <h2>{{order.purchaseOrderNo}}</h2>
+    <h3>{{order.status}}</h3>
+
+    <dl>
+      <dt>Date Created</dt>
+      <dd>{{order.dateCreated}}</dd>
+
+      <dt>Date Closed</dt>
+      <dd>{{order.dateClosed}}</dd>
+
+      <dt>Changes</dt>
+      <dd>{{order.history?.length || 'None'}}</dd>
+    </dl>
+
+    <br><br>
+    <button (click)="closed.emit()">Close</button>
+</div>
+
+<div class="order-history">
+  <app-order-history [order]="order"></app-order-history>
+</div>
+
+<!-- <div class="line-items">
+  <app-line-item-list [lineItems]="lineItems"></app-line-item-list>
+</div> -->

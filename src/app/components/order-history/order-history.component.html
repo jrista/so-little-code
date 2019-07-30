@@ -1,0 +1,16 @@
+<table *ngIf="order && order.history">
+  <thead>
+    <tr>
+      <td>Date of Action</td>
+      <td>Action</td>
+      <td>New Status</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let change of order.history">
+      <td>{{change.dateOfAction}}</td>
+      <td>{{change.action}}</td>
+      <td>{{change.newStatus}}</td>
+    </tr>
+  </tbody>
+</table>

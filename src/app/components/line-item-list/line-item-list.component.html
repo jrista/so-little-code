@@ -1,0 +1,16 @@
+<table *ngIf="lineItems && lineItems.length">
+  <thead>
+    <tr>
+      <td>Product</td>
+      <td>Qantity</td>
+      <td>Rush?</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let lineItem of lineItems">
+      <td>{{lineItem.productId}}</td>
+      <td>{{lineItem.quantity}}</td>
+      <td>{{lineItem.isRush}}</td>
+    </tr>
+  </tbody>
+</table>

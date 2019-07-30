@@ -1,0 +1,30 @@
+<div class="customer-list">
+  <table>  
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Tools</th>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{customer.id}}</td>
+        <td>{{customer.name}}</td>
+        <td>{{customer.title}}</td>
+        <td>
+          <a href="#" (click)="$event.preventDefault(); selected.emit(customer)">Select</a>&nbsp;
+          <a href="#" (click)="$event.preventDefault(); deleted.emit(customer)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="text-right" colspan="3">
+          Total Customers: {{customers.length}}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

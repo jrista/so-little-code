@@ -1,0 +1,35 @@
+<div class="customer-list">
+  <table>  
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Order No</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Closed</th>
+        <th>Changes</th>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{order.id}}</td>
+        <td>{{order.purchaseOrderNo}}</td>
+        <td>{{order.status}}</td>
+        <td>{{order.dateCreated}}</td>
+        <td>{{order.dateClosed}}</td>
+        <td>{{order.history?.length || 'none'}}</td>
+        <td>
+          <a href="#" (click)="$event.preventDefault(); selected.emit(order)">Select</a>&nbsp;
+          <a href="#" (click)="$event.preventDefault(); deleted.emit(order)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="text-right" colspan="3">
+          Total Customers: {{orders.length}}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

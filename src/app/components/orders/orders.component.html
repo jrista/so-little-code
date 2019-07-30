@@ -1,0 +1,16 @@
+<div class="orders" *ngIf="!(orders.isLoading$ | async); else loading">
+    <app-order-list 
+        [orders]="orders.all$ | async" 
+        (deleted)="orders.delete($event)"
+        (selected)="orders.select($event)">
+    </app-order-list>
+    <app-order-detail 
+        *ngIf="(orders.current$ | async) as order"
+        [order]="order"
+        [lineItems]="lineItems.byOrder$(order) | async"
+        (closed)="orders.deselect();">
+    </app-order-detail>
+</div>
+<ng-template #loading>
+    Loading orders...
+</ng-template>
