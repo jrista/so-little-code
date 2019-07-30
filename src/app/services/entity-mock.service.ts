@@ -9,28 +9,41 @@ import { orderRecords } from './order.data';
 
 @Injectable({providedIn: 'root'})
 export class EntityMockService implements IAutoEntityService<any> {
-  private customers: Customer[];
-  private orders: Order[];
+  private entities: {
+    Customer: Customer[];
+    Order: Order[];
+  };
 
   constructor() {
-    this.customers = customerRecords;
-    this.orders = orderRecords;
+    this.entities = {
+      Customer: customerRecords,
+      Order: orderRecords
+    };
   }
 
   loadAll(entityInfo: IEntityInfo): Observable<any[]> {
-    const entities = this[entityInfo.modelName];
+    const entities = this.entities[entityInfo.modelName];
     return of([...entities]);
   }
 
+  loadMany(entityInfo: IEntityInfo, criteria: any): Observable<any[]> {
+    const entities = this.entities[entityInfo.modelName];
+    if (entityInfo.modelName === 'LineItem') {
+      return of(entities.find(entity => entity.orderId === criteria.parents.order));
+    } else {
+      return of([...entities]);
+    }
+  }
+
   load(entityInfo: IEntityInfo, key: string | number): Observable<any> {
-    const entities = this[entityInfo.modelName];
+    const entities = this.entities[entityInfo.modelName];
     return of(entities.find(entity => 
         getKeyFromModel(entity.constructor, entity) === key
     ));
   }
 
   create(entityInfo: IEntityInfo, created: any): Observable<any> {
-    const entities = this[entityInfo.modelName];
+    const entities = this.entities[entityInfo.modelName];
     const keyNames = getKeyNamesFromModel(entityInfo.modelType);
     if (!keyNames.length) {
         const [keyName] = keyNames;
@@ -49,7 +62,7 @@ export class EntityMockService implements IAutoEntityService<any> {
   }
 
   update(entityInfo: IEntityInfo, updated: any): Observable<any> {
-    const entities = this[entityInfo.modelName];
+    const entities = this.entities[entityInfo.modelName];
     const keyNames = getKeyNamesFromModel(entityInfo.modelType);
     this[entityInfo.modelName] = entities.map(existing => 
         keyNames.every(key => existing[key] === updated[key]) ? updated : existing
@@ -59,7 +72,7 @@ export class EntityMockService implements IAutoEntityService<any> {
   }
 
   delete(entityInfo: IEntityInfo, deleted: any): Observable<any> {
-    const entities = this[entityInfo.modelName];
+    const entities = this.entities[entityInfo.modelName];
     const keyNames = getKeyNamesFromModel(entityInfo.modelType);
     this[entityInfo.modelName] = entities.filter(existing => 
         !keyNames.every(key => existing[key] === deleted[key])
