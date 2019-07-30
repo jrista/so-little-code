@@ -5,7 +5,7 @@
       (selected)="customers.select($event)">
     </app-customer-list>
     <app-customer-detail 
-      *ngIf="(customer.current$ | async) as customer"
+      *ngIf="(customers.current$ | async) as customer"
       [customer]="customer"
       (closed)="customers.deselect()">
     </app-customer-detail>
